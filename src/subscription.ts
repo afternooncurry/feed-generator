@@ -27,6 +27,17 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
           }
         }
 
+        //image filter
+        const _embed = create.record.embed;
+        if (_embed !== null && _embed !== undefined) {
+          const _type = _embed.$type as string;
+          if (!_type.startsWith('app.bsky.embed.images')){
+            return false;
+          }
+        } else {
+          return false;
+        }
+
         // only owl and similar kinds related posts
         const _text = create.record.text.toLowerCase();
         return _text.includes('猛禽') || 
