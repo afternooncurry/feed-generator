@@ -4,6 +4,8 @@ import {
 } from './lexicon/types/com/atproto/sync/subscribeRepos'
 import { FirehoseSubscriptionBase, getOpsByType } from './util/subscription'
 
+const pattern = /(猛禽)|(フクロウ)|(ふくろう)|(オオタカ)|(オオワシ)|(トンビ)|(オジロワシ)|(チョウゲンボウ)|(チュウヒ)|(イヌワシ)|(ノスリ)|(ハヤブサ)|(ハクトウワシ)|(ミミズク)|(みみずく)|(梟)|(鴞)|(鴟)|(🦉)/
+
 export class FirehoseSubscription extends FirehoseSubscriptionBase {
   async handleEvent(evt: RepoEvent) {
     if (!isCommit(evt)) return
@@ -16,7 +18,7 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
     //   console.log(post.record.text)
     // }
 
-    const postsToDelete = ops.posts.deletes.map((del) => del.uri)
+    const postsToDelete = ops.posts.deletes.map((del) => del.uri)    
     const postsToCreate = ops.posts.creates
       .filter((create) => {
         // Language filter for Japanese language
@@ -25,7 +27,9 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
           if (_langs.length === 0 || !_langs.includes('ja')) {
             return false;
           }
-        }
+        } else {
+	    return false;
+	}
 
         //image filter
         const _embed = create.record.embed;
@@ -40,25 +44,7 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
 
         // only owl and similar kinds related posts
         const _text = create.record.text.toLowerCase();
-        return _text.includes('猛禽') || 
-          _text.includes('フクロウ') ||
-          _text.includes('ふくろう') ||
-          _text.includes('オオタカ') ||
-          _text.includes('オオワシ') ||
-          _text.includes('トンビ') ||
-          _text.includes('オジロワシ') ||
-          _text.includes('チョウゲンボウ') ||
-          _text.includes('チュウヒ') ||
-          _text.includes('イヌワシ') ||
-          _text.includes('ノスリ') ||
-         _text.includes('ハヤブサ') ||
-          _text.includes('ハクトウワシ')||
-          _text.includes('ミミズク') ||
-          _text.includes('みみずく') ||
-          _text.includes('梟') ||
-          _text.includes('鴞') ||
-          _text.includes('鴟') ||
-          _text.includes('🦉');
+        return pattern.test(_text);
       })
       .map((create) => {
         // map owl-related posts to a db row

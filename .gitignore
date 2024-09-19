@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 # cached data
-db.sqlite
+db.sqlite*
