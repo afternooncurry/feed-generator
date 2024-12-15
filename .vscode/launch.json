@@ -8,25 +8,40 @@
             "type": "node",
             "name": "Launch interface of Feed generator",
             "request": "launch",
-            "program": "${workspaceFolder}/src/index.ts --operation feed",
+            "program": "${workspaceFolder}/src/index.ts",
+            "args": ["--operation", "feed"],
+            "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"],
             "skipFiles": [
-                "<node_internals>/**"
+                "<node_internals>/**",
+                "node_modules/**"
             ],
             "outFiles": [
-                "${workspaceFolder}/**/*.js"
-            ]
+                "${workspaceFolder}/dist/**/*.js"
+            ],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/",
+                "!/node_modules/**"
+            ],
         },
         {
             "type": "node",
             "name": "Launch indexer of Feed generator",
             "request": "launch",
-            "program": "${workspaceFolder}/src/index.ts --operation index",
+            "program": "${workspaceFolder}/src/index.ts",
+            "args": ["--operation", "index"],
+            "runtimeArgs": ["--nolazy", "-r", "ts-node/register/transpile-only"],
             "skipFiles": [
-                "<node_internals>/**"
+                "<node_internals>/**",
+                "node_modules/**"
             ],
             "outFiles": [
-                "${workspaceFolder}/**/*.js"
-            ]
+                "${workspaceFolder}/dist/**/*.js"
+                // "${workspaceFolder}/node_modules/typescript/**/*.js"
+            ],
+            "resolveSourceMapLocations": [
+                "${workspaceFolder}/",
+                "!/node_modules/**"
+            ],
         }
     ]
 }

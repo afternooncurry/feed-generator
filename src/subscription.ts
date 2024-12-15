@@ -18,7 +18,7 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
     //   console.log(post.record.text)
     // }
 
-    const postsToDelete = ops.posts.deletes.map((del) => del.uri)    
+    const postsToDelete = ops.posts.deletes.map((del) => del.uri)
     const postsToCreate = ops.posts.creates
       .filter((create) => {
         // Language filter for Japanese language
@@ -28,14 +28,14 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
             return false;
           }
         } else {
-	    return false;
-	}
+          return false;
+        }
 
         //image filter
         const _embed = create.record.embed;
         if (_embed !== null && _embed !== undefined) {
           const _type = _embed.$type as string;
-          if (!_type.startsWith('app.bsky.embed.images')){
+          if (!_type.startsWith('app.bsky.embed.images')) {
             return false;
           }
         } else {

@@ -38,13 +38,20 @@ const run = async () => {
       subscriptionEndpoint:
         maybeStr(process.env.FEEDGEN_SUBSCRIPTION_ENDPOINT) ??
         'wss://bsky.network',
+      jetstreamEndpoint:
+        maybeStr(process.env.FEEDGEN_JETSTREAM_ENDPOINT) ??
+        'wss://jetstream.atproto.tools',
+      jetstreamCollection:
+        maybeStr(process.env.FEEDGEN_JETSTREAM_COLLECTION) ??
+        'app.bsky.feed.post',
       subscriptionReconnectDelay:
         maybeInt(process.env.FEEDGEN_SUBSCRIPTION_RECONNECT_DELAY) ?? 3000,
     })
 
     await indexer.start()
     console.log(
-      `🤖 running feed indexer for ${indexer.cfg.subscriptionEndpoint}`,
+      // `🤖 running feed indexer for ${indexer.cfg.subscriptionEndpoint}`,
+      `🤖 running feed indexer for ${indexer.cfg.jetstreamEndpoint}`,
     )
   }
 
