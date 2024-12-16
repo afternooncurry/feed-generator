@@ -19,5 +19,7 @@ export type Config = {
 export type IndexerConfig = {
   sqliteLocation: string
   subscriptionEndpoint: string
+  jetstreamEndpoint: string
+  jetstreamCollection: string
   subscriptionReconnectDelay: number
 }
