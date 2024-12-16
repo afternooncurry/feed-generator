@@ -166,6 +166,7 @@ export const getJetstreamOpsByType = (
 ): OperationsByType => {
   const opsByType: OperationsByType = {
     posts: [],
+    deletes: [],
   };
 
   if (
@@ -176,9 +177,17 @@ export const getJetstreamOpsByType = (
     opsByType.posts.push(evt);
   }
 
+  if (
+    evt?.commit?.collection === "app.bsky.feed.post" &&
+    evt?.commit?.operation === "delete"
+  ) {
+    opsByType.deletes.push(evt);
+  }
+
   return opsByType;
 };
 
 type OperationsByType = {
   posts: JetstreamEvent[];
+  deletes: JetstreamEvent[];
 };
